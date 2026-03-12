@@ -1,5 +1,20 @@
 import Task from '../models/Task.js';
-
+/**
+ * @swagger
+ * /api/projects/{projectId}/tasks:
+ *   get:
+ *     summary: Get tasks for project
+ *     tags: [Projects]
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of tasks
+ */
 export async function list(req, res, next) {
   try {
     const tasks = await Task.find({ project: req.params.projectId })

@@ -1,5 +1,20 @@
 import Board from '../models/Board.js';
-
+/**
+ * @swagger
+ * /api/projects/{projectId}/boards:
+ *   get:
+ *     summary: Get boards for a project
+ *     tags: [Projects]
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of boards
+ */
 export async function list(req, res, next) {
   try {
     const boards = await Board.find({ project: req.params.projectId }).sort({ order: 1, createdAt: 1 });

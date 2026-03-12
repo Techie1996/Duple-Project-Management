@@ -1,6 +1,15 @@
 import Project from '../models/Project.js';
 import ProjectMember from '../models/ProjectMember.js';
-
+/**
+ * @swagger
+ * /api/projects:
+ *   get:
+ *     summary: Get all projects
+ *     tags: [Projects]
+ *     responses:
+ *       200:
+ *         description: List of projects
+ */
 export async function list(req, res, next) {
   try {
     const userId = req.user.userId;
@@ -31,7 +40,16 @@ export async function list(req, res, next) {
     next(err);
   }
 }
-
+/**
+ * @swagger
+ * /api/projects:
+ *   post:
+ *     summary: Create new project
+ *     tags: [Projects]
+ *     responses:
+ *       201:
+ *         description: Project created
+ */
 export async function create(req, res, next) {
   try {
     const { name } = req.body;

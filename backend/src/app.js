@@ -1,3 +1,5 @@
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -8,9 +10,9 @@ import env from './config/env.js';
 import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
 import authRoutes from './routes/authRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
-
+import { setupSwagger } from "./docs/swagger.js";
 const app = express();
-
+setupSwagger(app);
 // Security headers
 app.use(helmet());
 
@@ -39,6 +41,26 @@ const apiLimiter = rateLimit({
 });
 app.use('/api', apiLimiter);
 
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Duple Project Management API',
+      version: '1.0.0',
+      description: 'API documentation for the Project Management tool'
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000'
+      }
+    ]
+  },
+  apis: ['./src/routes/*.js'] // where swagger comments live
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Health check
 app.get('/health', (req, res) => {
   res.json({

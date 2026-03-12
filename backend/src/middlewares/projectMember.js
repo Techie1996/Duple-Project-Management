@@ -1,5 +1,14 @@
 import ProjectMember from '../models/ProjectMember.js';
-
+/**
+ * @swagger
+ * /api/projects:
+ *   get:
+ *     summary: Get all projects
+ *     tags: [Projects]
+ *     responses:
+ *       200:
+ *         description: List of projects
+ */
 export async function requireProjectMember(req, res, next) {
   try {
     const projectId = req.params.projectId;
